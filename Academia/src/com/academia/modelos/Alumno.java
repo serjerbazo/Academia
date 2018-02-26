@@ -42,6 +42,6 @@ public class Alumno {
 	
 	private void ConsultarCurso(Curso curso) {
 		// TODO Auto-generated method stub
-
+		System.out.println();
 	}
 }
