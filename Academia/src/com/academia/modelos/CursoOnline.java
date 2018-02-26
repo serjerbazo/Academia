@@ -11,7 +11,7 @@ public class CursoOnline extends Curso {
 	private ArrayList cursosPrevios;
 		
 	public CursoOnline(String titulo, Calendar fInicio, Calendar fFin, int dias, double precio, int nivelMax,
-			ArrayList cursosPrevios) {
+			ArrayList<?> cursosPrevios) {
 		super(titulo, fInicio, fFin, dias, precio);
 		this.nivelMax = nivelMax;
 		this.cursosPrevios = cursosPrevios;
