@@ -11,6 +11,7 @@ public class Alumno {
 	private String dni;
 	private int crédito;
 	private AccesoBD accesoBD = new AccesoBD("academia");
+
 	public Alumno(String nombre, String dni) {
 		super();
 		this.nombre = nombre;
