@@ -1,11 +1,16 @@
 package com.academia.modelos;
 
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+
+import com.academia.DAO.AccesoBD;
+
 public class Alumno {
 	private int idAlumno;
 	private String nombre;
 	private String dni;
 	private int crédito;
-
+	private AccesoBD accesoBD = new AccesoBD("academia");
 	public Alumno(String nombre, String dni) {
 		super();
 		this.nombre = nombre;
@@ -36,8 +41,14 @@ public class Alumno {
 		this.idAlumno = idAlumno;
 	}
 	
-	public void anadir() {
-		//TODO vacío
+	public void anadir(Curso curso) {
+		PreparedStatement ps = accesoBD.insert("Clase", 5);
+		ArrayList<Object> parametros = new ArrayList<>();
+		parametros.add(this.idAlumno);
+		parametros.add(curso.getId());
+		parametros.add(0);
+		parametros.add(false);
+		accesoBD.rellenarPs(ps, parametros);
 	}
 	
 	private void ConsultarCurso(Curso curso) {

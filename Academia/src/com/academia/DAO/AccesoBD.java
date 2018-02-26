@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class AccesoBD {
 	 */
 	public AccesoBD(String databaseName) {
 		this.user = "root";
+		this.databaseName = databaseName;
 		try {
 			// Class.forName("oracle.jdbc.driver.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://192.168.1.156:3306/" + databaseName, user, password);
@@ -50,6 +52,7 @@ public class AccesoBD {
 		this.dbType = dbType;
 		this.user = user;
 		this.password = password;
+		this.databaseName = databaseName;
 		if (this.dbType.equalsIgnoreCase("oracle")) {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -72,6 +75,43 @@ public class AccesoBD {
 		}
 
 	}
+	
+	public PreparedStatement insert(String nombretabla, int numerocampos) {
+		String  query ="";
+		query+="INSERT INTO "+this.databaseName+"\\."+nombretabla+" VALUES (?";
+		for (int i = 1; i < numerocampos; i++) {
+		query+=",?";	
+		}
+		query+="\\)";
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
+
+	}
+	
+	
+	public void rellenarPs(PreparedStatement ps, ArrayList<Object> parametros) {
+		for (int i = 0; i < parametros.size(); i++) {
+			try {
+				ps.setObject(i, parametros.get(i));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				ps.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 
 	public List<Object> select(String query) {
 		ResultSet rs = null;
@@ -182,5 +222,10 @@ public class AccesoBD {
 		}
 		return parameters;
 	}
+
+	public Connection getCon() {
+		return con;
+	}
+	
 
 }
