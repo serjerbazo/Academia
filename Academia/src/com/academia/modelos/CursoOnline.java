@@ -19,13 +19,13 @@ public class CursoOnline extends Curso {
 
 	@Override
 	public boolean matricular(Alumno al) {
-		// TODO Auto-generated method stub
+		// TODO Sin hacer
 		return false;
 	}
 
 	@Override
 	public boolean calificar(Alumno al) {
-		// TODO Auto-generated method stub
+		// TODO Hacer cosas
 		return false;
 	}
 	

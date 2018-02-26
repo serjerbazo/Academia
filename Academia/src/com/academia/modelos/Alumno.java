@@ -42,6 +42,6 @@ public class Alumno {
 	
 	private void ConsultarCurso(Curso curso) {
 		// TODO Hay que hacer este método
-	//	System.out.println();
+
 	}
 }
