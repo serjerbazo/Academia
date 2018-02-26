@@ -5,6 +5,7 @@ public class Alumno {
 	private String nombre;
 	private String dni;
 	private int crédito;
+	private int c;//prueba
 
 	public Alumno(String nombre, String dni) {
 		super();
