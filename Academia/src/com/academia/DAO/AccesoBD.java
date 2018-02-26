@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,8 @@ public class AccesoBD {
 	private String user;
 	private String password = "";
 	private String databaseName;
-	private static final Logger log = LogManager.getLogger(AccesoBD.class);
+	public static AccesoBD accesoBD = new AccesoBD("academia");
+//	private static final Logger log = LogManager.getLogger(AccesoBD.class);
 
 	/**
 	 * Creates a new connection with MySQL on localhost user root blank pwd
@@ -41,9 +43,10 @@ public class AccesoBD {
 		} catch (SQLException
 		// |ClassNotFoundException
 		e) {
-			log.error(e.getMessage());
+//			log.error(e.getMessage());
+			e.printStackTrace();
 		}
-		log.info("Conexión establecida");
+//		log.info("Conexión establecida");
 	}
 
 	public AccesoBD(String ip, String port, String dbType, String user, String password, String databaseName) {
@@ -57,20 +60,22 @@ public class AccesoBD {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 			} catch (ClassNotFoundException e1) {
-				log.error(e1.getMessage());
+//				log.error(e1.getMessage());
+				e1.printStackTrace();
 			}
 			try {
 				con = DriverManager.getConnection("jdbc:oracle:thin:@" + this.ip + ":" + this.port + ":xe", user,
 						password);
 			} catch (SQLException e) {
-				log.error(e.getMessage());
+//				log.error(e.getMessage());
+				e.printStackTrace();
 			}
 		}else if(this.dbType.equalsIgnoreCase("mysql")) {
 			try {
 				con = DriverManager.getConnection("jdbc:mysql://" + this.ip + ":" + this.port +"/"+ databaseName, user,
 						password);
 			} catch (SQLException e) {
-				log.error(e.getMessage());
+//				log.error(e.getMessage());
 			}
 		}
 
@@ -115,13 +120,16 @@ public class AccesoBD {
 
 	public List<Object> select(String query) {
 		ResultSet rs = null;
+		Statement st=null;
 		List<Object> al = new ArrayList<>();
 		Object[] obj=null;
 		try {
-			rs = con.createStatement().executeQuery(query);
+			st=con.createStatement();
+			rs = st.executeQuery(query);
 			obj =new Object[rs.getMetaData().getColumnCount()];
 		} catch (SQLException e) {
-			log.error(e.getMessage());
+//			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		try {
@@ -132,7 +140,7 @@ public class AccesoBD {
 				al.add(obj);
 			}
 		} catch (SQLException e) {
-			log.error(e.getMessage());
+//			log.error(e.getMessage());
 		}
 		return al;
 	}
@@ -211,11 +219,11 @@ public class AccesoBD {
 						parameters.put(all[i].toString().substring(3), valor);
 					}
 				} catch (IllegalArgumentException e) {
-					log.error(e.getMessage());
+//					log.error(e.getMessage());
 				} catch (IllegalAccessException e) {
-					log.error(e.getMessage());
+//					log.error(e.getMessage());
 				} catch (InvocationTargetException e) {
-					log.error(e.getMessage());
+//					log.error(e.getMessage());
 				}
 
 			}

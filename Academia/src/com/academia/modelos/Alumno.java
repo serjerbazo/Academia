@@ -2,6 +2,7 @@ package com.academia.modelos;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.academia.DAO.AccesoBD;
 
@@ -10,7 +11,7 @@ public class Alumno {
 	private String nombre;
 	private String dni;
 	private int crédito;
-	private AccesoBD accesoBD = new AccesoBD("academia");
+	
 
 	public Alumno(String nombre, String dni) {
 		super();
@@ -43,17 +44,39 @@ public class Alumno {
 	}
 	
 	public void anadir(Curso curso) {
-		PreparedStatement ps = accesoBD.insert("Clase", 5);
+		PreparedStatement ps = AccesoBD.accesoBD.insert("Clase", 5);
 		ArrayList<Object> parametros = new ArrayList<>();
 		parametros.add(this.idAlumno);
 		parametros.add(curso.getId());
 		parametros.add(0);
 		parametros.add(false);
-		accesoBD.rellenarPs(ps, parametros);
+		AccesoBD.accesoBD.rellenarPs(ps, parametros);
 	}
 	
-	private void ConsultarCurso(Curso curso) {
+	public void ConsultarCurso(Curso curso) {
 		// TODO Hay que hacer este método
 
 	}
+	public static ArrayList<Alumno> parsearAlumnos() {
+		List<Object> alumnosObj=AccesoBD.accesoBD.select("select * from alumnos");
+		ArrayList<Alumno> alumnos = new ArrayList<>();
+		Alumno a = null;
+		for (int i = 0; i < alumnosObj.size(); i++) {
+			
+			a = new Alumno((String)((Object[])alumnosObj.get(i))[1],
+					(String)((Object[])alumnosObj.get(i))[2],
+					(int)((Object[])alumnosObj.get(i))[3]);
+			alumnos.add(a);
+		}
+		return alumnos;	
+
+	}
+
+	@Override
+	public String toString() {
+		return "Alumno [idAlumno=" + idAlumno + ", nombre=" + nombre + ", dni=" + dni + ", crédito=" + crédito + "]";
+	}
+	
+	
+
 }
