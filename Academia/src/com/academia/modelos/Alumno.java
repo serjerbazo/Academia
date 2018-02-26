@@ -41,7 +41,7 @@ public class Alumno {
 	}
 	
 	private void ConsultarCurso(Curso curso) {
-		// TODO Auto-generated method stub
-		System.out.println();
+		// TODO Hay que hacer este método
+	//	System.out.println();
 	}
 }
