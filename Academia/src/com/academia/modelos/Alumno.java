@@ -11,13 +11,12 @@ public class Alumno {
 	private String nombre;
 	private String dni;
 	private int crédito;
-	
 
 	public Alumno(String nombre, String dni) {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
-		this.crédito=100;
+		this.crédito = 100;
 	}
 
 	public Alumno(String nombre, String dni, int crédito) {
@@ -28,11 +27,11 @@ public class Alumno {
 	}
 
 	public void incrementarCrédito(int cantidad) {
-		this.crédito+=cantidad;
+		this.crédito += cantidad;
 	}
-	
+
 	public void decrementarCrédito(int cantidad) {
-		this.crédito-=cantidad;
+		this.crédito -= cantidad;
 	}
 
 	public int getIdAlumno() {
@@ -42,7 +41,7 @@ public class Alumno {
 	public void setIdAlumno(int idAlumno) {
 		this.idAlumno = idAlumno;
 	}
-	
+
 	public void anadir(Curso curso) {
 		PreparedStatement ps = AccesoBD.accesoBD.insert("Clase", 5);
 		ArrayList<Object> parametros = new ArrayList<>();
@@ -52,23 +51,38 @@ public class Alumno {
 		parametros.add(false);
 		AccesoBD.accesoBD.rellenarPs(ps, parametros);
 	}
-	
 
-	public ArrayList<Curso> consultarCurso(Curso curso) {
-		return null;
+	public ArrayList<Curso> consultarCurso() {
+		List<Object> alumnosObj = AccesoBD.accesoBD.select("SELECT * FROM cursos_alumnos where DNI =" + this.dni + ";");
+		ArrayList<Curso> cursos = new ArrayList<>();
+		Curso curso = null;
+		if (alumnosObj.size() > 0) {
+			for (Object object : alumnosObj) {
+				Object[] registro = (Object[])object;
+				for (int i = 0; i < registro.length; i++) {
+					if(!((String)registro[registro.length-1]).equals("Presencial")) {
+//						curso = new CursoOnline(registro[3], registro[4], registro[5], registro[6], registro[7], registro[8], registro[3]);
+					}else {
+//TODO parsearCursos						curso = new CursoPresencial(registro[3], registro[4], registro[5], registro[6], registro[7], cupo, asistMin);
+					}
+				}
+			}
+		}
+		return cursos;
 	}
+
 	public static ArrayList<Alumno> parsearAlumnos() {
-		List<Object> alumnosObj=AccesoBD.accesoBD.select("SELECT idAlumnos,    Nombre,    DNI,    Credito FROM alumnos;");
+		List<Object> alumnosObj = AccesoBD.accesoBD
+				.select("SELECT idAlumnos,    Nombre,    DNI,    Credito FROM alumnos;");
 		ArrayList<Alumno> alumnos = new ArrayList<>();
 		Alumno a = null;
 		for (int i = 0; i < alumnosObj.size(); i++) {
-			
-			a = new Alumno((String)((Object[])alumnosObj.get(i))[1],
-					(String)((Object[])alumnosObj.get(i))[2],
-					(int)((Object[])alumnosObj.get(i))[3]);
+
+			a = new Alumno((String) ((Object[]) alumnosObj.get(i))[1], (String) ((Object[]) alumnosObj.get(i))[2],
+					(int) ((Object[]) alumnosObj.get(i))[3]);
 			alumnos.add(a);
 		}
-		return alumnos;	
+		return alumnos;
 
 	}
 
@@ -76,7 +90,5 @@ public class Alumno {
 	public String toString() {
 		return "Alumno [idAlumno=" + idAlumno + ", nombre=" + nombre + ", dni=" + dni + ", crédito=" + crédito + "]";
 	}
-	
-	
 
 }

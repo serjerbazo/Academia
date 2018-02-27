@@ -123,7 +123,7 @@ public class AccesoBD {
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(query);
-			obj = new Object[rs.getMetaData().getColumnCount()];
+			
 		} catch (SQLException e) {
 			// log.error(e.getMessage());
 			e.printStackTrace();
@@ -131,8 +131,9 @@ public class AccesoBD {
 
 		try {
 			while (rs.next()) {
-				for (int j = 1; j < rs.getMetaData().getColumnCount()+1; j++) {
-					obj[j-1] = rs.getObject(j);
+				obj = new Object[rs.getMetaData().getColumnCount()];
+				for (int j = 1; j < rs.getMetaData().getColumnCount()+1; j++) {					
+					obj[j-1]=rs.getObject(j);
 				}
 				al.add(obj);
 			}
@@ -206,7 +207,7 @@ public class AccesoBD {
 		Method all[] = clase.getDeclaredMethods();
 		// List<Method> getters = new ArrayList<Method>();
 		for (int i = 0; i < all.length; i++) {
-			if (all[i].toString().startsWith("get")) {
+			if (all[i].getName().startsWith("get")) {
 				try {
 					String valor = (String) all[i].invoke(object, "");
 					if (StringUtils.isBlank(valor)) {
