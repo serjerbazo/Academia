@@ -30,7 +30,7 @@ public class Alumno {
 		this.crédito += cantidad;
 	}
 
-	public void decrementarCrédito(int cantidad) {
+	public void decrementarCrédito(double cantidad) {
 		this.crédito -= cantidad;
 	}
 

@@ -21,7 +21,12 @@ public class CursoPresencial extends Curso {
 	@Override
 	public boolean matricular(Alumno al) {
 		if (al.getCrédito() >= super.getPrecio() && this.plazas > 0) {
-			return al.anadir(this);
+			if (super.consultarAlumnoApto(al)) {
+				return false;
+			} else {
+				al.decrementarCrédito(this.getPrecio());
+				return al.anadir(this);
+			}
 		}
 		return false;
 	}
