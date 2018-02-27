@@ -10,7 +10,7 @@ public class Alumno {
 	private int idAlumno;
 	private String nombre;
 	private String dni;
-	private int crédito;
+	private double crédito;
 
 	public Alumno(String nombre, String dni) {
 		super();
@@ -26,7 +26,7 @@ public class Alumno {
 		this.crédito = crédito;
 	}
 
-	public void incrementarCrédito(int cantidad) {
+	public void incrementarCrédito(double cantidad) {
 		this.crédito += cantidad;
 	}
 
@@ -93,7 +93,7 @@ public class Alumno {
 		return "Alumno [idAlumno=" + idAlumno + ", nombre=" + nombre + ", dni=" + dni + ", crédito=" + crédito + "]";
 	}
 
-	public int getCrédito() {
+	public double getCrédito() {
 		return crédito;
 	}
 
