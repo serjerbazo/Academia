@@ -53,13 +53,9 @@ public class Alumno {
 		AccesoBD.accesoBD.rellenarPs(ps, parametros);
 	}
 	
-<<<<<<< HEAD
+
 	public ArrayList<Curso> consultarCurso(Curso curso) {
-=======
-	public void ConsultarCurso(Curso curso) {
->>>>>>> branch 'master' of https://github.com/serjerbazo/Academia
-		// TODO Hay que hacer este método
-		
+		return null;
 	}
 	public static ArrayList<Alumno> parsearAlumnos() {
 		List<Object> alumnosObj=AccesoBD.accesoBD.select("select * from alumnos");
