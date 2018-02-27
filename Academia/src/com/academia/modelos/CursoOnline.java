@@ -11,7 +11,7 @@ public class CursoOnline extends Curso {
 
 	private int nivelMax;
 	private HashMap<Alumno, Integer> seguimiento;
-	List cursosPrevios;
+	private List cursosPrevios;
 		
 	public CursoOnline(String titulo, Calendar fInicio, Calendar fFin, int dias, double precio, int nivelMax,
 			List<Curso> cursosPrevios) {
