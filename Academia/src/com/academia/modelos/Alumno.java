@@ -93,4 +93,8 @@ public class Alumno {
 		return "Alumno [idAlumno=" + idAlumno + ", nombre=" + nombre + ", dni=" + dni + ", crédito=" + crédito + "]";
 	}
 
+	public int getCrédito() {
+		return crédito;
+	}
+
 }

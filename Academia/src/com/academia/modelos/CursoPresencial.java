@@ -23,6 +23,9 @@ public class CursoPresencial extends Curso {
 	@Override
 	public boolean matricular(Alumno al) {
 		// TODO Sin hacer
+		if(al.getCrédito()>=super.getPrecio()&&this.plazas>0) {
+			al.anadir(this);
+		}
 		return false;
 	}
 
