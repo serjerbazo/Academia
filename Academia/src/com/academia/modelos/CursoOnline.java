@@ -11,13 +11,8 @@ public class CursoOnline extends Curso {
 
 	private int nivelMax;
 	private HashMap<Alumno, Integer> seguimiento;
-<<<<<<< Upstream, based on branch 'master' of https://github.com/serjerbazo/Academia
-	private List cursosPrevios;
-		
-=======
 	private List<?> cursosPrevios;
 
->>>>>>> 6a19213 merge
 	public CursoOnline(String titulo, Calendar fInicio, Calendar fFin, int dias, double precio, int nivelMax,
 			List<?> cursosPrevios) {
 		super(titulo, fInicio, fFin, dias, precio);
