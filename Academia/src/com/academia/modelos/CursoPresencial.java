@@ -25,6 +25,7 @@ public class CursoPresencial extends Curso {
 				return false;
 			} else {
 				al.decrementarCrédito(this.getPrecio());
+				this.getAlumnosMatri().add(al);
 				return al.anadir(this);
 			}
 		}
