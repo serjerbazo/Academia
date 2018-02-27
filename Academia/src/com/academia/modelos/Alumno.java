@@ -58,7 +58,7 @@ public class Alumno {
 		return null;
 	}
 	public static ArrayList<Alumno> parsearAlumnos() {
-		List<Object> alumnosObj=AccesoBD.accesoBD.select("select * from alumnos");
+		List<Object> alumnosObj=AccesoBD.accesoBD.select("SELECT idAlumnos,    Nombre,    DNI,    Credito FROM alumnos;");
 		ArrayList<Alumno> alumnos = new ArrayList<>();
 		Alumno a = null;
 		for (int i = 0; i < alumnosObj.size(); i++) {

@@ -1,6 +1,5 @@
 package com.academia.DAO;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -27,7 +26,7 @@ public class AccesoBD {
 	private String password = "";
 	private String databaseName;
 	public static AccesoBD accesoBD = new AccesoBD("academia");
-//	private static final Logger log = LogManager.getLogger(AccesoBD.class);
+	// private static final Logger log = LogManager.getLogger(AccesoBD.class);
 
 	/**
 	 * Creates a new connection with MySQL on localhost user root blank pwd
@@ -38,15 +37,15 @@ public class AccesoBD {
 		this.user = "root";
 		this.databaseName = databaseName;
 		try {
-			// Class.forName("oracle.jdbc.driver.Driver");
+			// Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection("jdbc:mysql://192.168.1.156:3306/" + databaseName, user, password);
 		} catch (SQLException
 		// |ClassNotFoundException
 		e) {
-//			log.error(e.getMessage());
+			// log.error(e.getMessage());
 			e.printStackTrace();
 		}
-//		log.info("Conexión establecida");
+		// log.info("Conexión establecida");
 	}
 
 	public AccesoBD(String ip, String port, String dbType, String user, String password, String databaseName) {
@@ -60,34 +59,34 @@ public class AccesoBD {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 			} catch (ClassNotFoundException e1) {
-//				log.error(e1.getMessage());
+				// log.error(e1.getMessage());
 				e1.printStackTrace();
 			}
 			try {
 				con = DriverManager.getConnection("jdbc:oracle:thin:@" + this.ip + ":" + this.port + ":xe", user,
 						password);
 			} catch (SQLException e) {
-//				log.error(e.getMessage());
+				// log.error(e.getMessage());
 				e.printStackTrace();
 			}
-		}else if(this.dbType.equalsIgnoreCase("mysql")) {
+		} else if (this.dbType.equalsIgnoreCase("mysql")) {
 			try {
-				con = DriverManager.getConnection("jdbc:mysql://" + this.ip + ":" + this.port +"/"+ databaseName, user,
-						password);
+				con = DriverManager.getConnection("jdbc:mysql://" + this.ip + ":" + this.port + "/" + databaseName,
+						user, password);
 			} catch (SQLException e) {
-//				log.error(e.getMessage());
+				// log.error(e.getMessage());
 			}
 		}
 
 	}
-	
+
 	public PreparedStatement insert(String nombretabla, int numerocampos) {
-		String  query ="";
-		query+="INSERT INTO "+this.databaseName+"\\."+nombretabla+" VALUES (?";
+		String query = "";
+		query += "INSERT INTO " + this.databaseName + "\\." + nombretabla + " VALUES (?";
 		for (int i = 1; i < numerocampos; i++) {
-		query+=",?";	
+			query += ",?";
 		}
-		query+="\\)";
+		query += "\\)";
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement(query);
@@ -97,8 +96,7 @@ public class AccesoBD {
 		return ps;
 
 	}
-	
-	
+
 	public void rellenarPs(PreparedStatement ps, ArrayList<Object> parametros) {
 		for (int i = 0; i < parametros.size(); i++) {
 			try {
@@ -117,30 +115,29 @@ public class AccesoBD {
 
 	}
 
-
 	public List<Object> select(String query) {
 		ResultSet rs = null;
-		Statement st=null;
+		Statement st = null;
 		List<Object> al = new ArrayList<>();
-		Object[] obj=null;
+		Object[] obj = null;
 		try {
-			st=con.createStatement();
+			st = con.createStatement();
 			rs = st.executeQuery(query);
-			obj =new Object[rs.getMetaData().getColumnCount()];
+			obj = new Object[rs.getMetaData().getColumnCount()];
 		} catch (SQLException e) {
-//			log.error(e.getMessage());
+			// log.error(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		try {
 			while (rs.next()) {
-				for (int j = 0; j < rs.getMetaData().getColumnCount(); j++) {
-					obj[j]=rs.getObject(j);
+				for (int j = 1; j < rs.getMetaData().getColumnCount()+1; j++) {
+					obj[j-1] = rs.getObject(j);
 				}
 				al.add(obj);
 			}
 		} catch (SQLException e) {
-//			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 		return al;
 	}
@@ -219,11 +216,11 @@ public class AccesoBD {
 						parameters.put(all[i].toString().substring(3), valor);
 					}
 				} catch (IllegalArgumentException e) {
-//					log.error(e.getMessage());
+					// log.error(e.getMessage());
 				} catch (IllegalAccessException e) {
-//					log.error(e.getMessage());
+					// log.error(e.getMessage());
 				} catch (InvocationTargetException e) {
-//					log.error(e.getMessage());
+					// log.error(e.getMessage());
 				}
 
 			}
@@ -234,6 +231,5 @@ public class AccesoBD {
 	public Connection getCon() {
 		return con;
 	}
-	
 
 }
