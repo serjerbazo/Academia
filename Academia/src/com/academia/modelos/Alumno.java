@@ -45,6 +45,7 @@ public class Alumno {
 	public void anadir(Curso curso) {
 		PreparedStatement ps = AccesoBD.accesoBD.insert("Clase", 5);
 		ArrayList<Object> parametros = new ArrayList<>();
+		parametros.add(null);
 		parametros.add(this.idAlumno);
 		parametros.add(curso.getId());
 		parametros.add(0);
@@ -80,6 +81,7 @@ public class Alumno {
 
 			a = new Alumno((String) ((Object[]) alumnosObj.get(i))[1], (String) ((Object[]) alumnosObj.get(i))[2],
 					(int) ((Object[]) alumnosObj.get(i))[3]);
+			a.setIdAlumno((int)((Object[]) alumnosObj.get(i))[0]);
 			alumnos.add(a);
 		}
 		return alumnos;
