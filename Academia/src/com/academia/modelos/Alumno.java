@@ -11,12 +11,14 @@ public class Alumno {
 	private String nombre;
 	private String dni;
 	private double crédito;
+	private ArrayList<Curso> listaCursos;
 
 	public Alumno(String nombre, String dni) {
 		super();
 		this.nombre = nombre;
 		this.dni = dni;
 		this.crédito = 100;
+		listaCursos = new ArrayList<>();
 	}
 
 	public Alumno(String nombre, String dni, int crédito) {
@@ -24,6 +26,7 @@ public class Alumno {
 		this.nombre = nombre;
 		this.dni = dni;
 		this.crédito = crédito;
+		listaCursos = new ArrayList<>();
 	}
 
 	public void incrementarCrédito(double cantidad) {
@@ -51,6 +54,10 @@ public class Alumno {
 		parametros.add(0);
 		parametros.add(false);
 		return AccesoBD.accesoBD.rellenarPs(ps, parametros);
+	}
+	
+	public ArrayList<Curso> getListaCursos() {
+		return listaCursos;
 	}
 
 	public ArrayList<Curso> consultarCurso() {

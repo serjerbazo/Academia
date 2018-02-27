@@ -11,10 +11,15 @@ public class CursoOnline extends Curso {
 
 	private int nivelMax;
 	private HashMap<Alumno, Integer> seguimiento;
+<<<<<<< Upstream, based on branch 'master' of https://github.com/serjerbazo/Academia
 	private List cursosPrevios;
 		
+=======
+	private List<?> cursosPrevios;
+
+>>>>>>> 6a19213 merge
 	public CursoOnline(String titulo, Calendar fInicio, Calendar fFin, int dias, double precio, int nivelMax,
-			List<Curso> cursosPrevios) {
+			List<?> cursosPrevios) {
 		super(titulo, fInicio, fFin, dias, precio);
 		this.nivelMax = nivelMax;
 		this.cursosPrevios = cursosPrevios;
@@ -22,42 +27,50 @@ public class CursoOnline extends Curso {
 
 	@Override
 	public boolean matricular(Alumno al) {
-		// TODO Sin hacer
-		return false;
+		if (al.getCrédito() >= this.getPrecio()) {
+			for (int i = 0; i < al.getListaCursos().size(); i++) {
+
+				if (!cursosPrevios.contains(al.getListaCursos().get(i))) {
+					return false;
+				}
+				if (!al.getListaCursos().get(i).getAlumnosApto().contains(al)) {
+
+					return false;
+				}
+
+			}
+			al.decrementarCrédito(this.getPrecio());
+			al.anadir(this);
+			this.getAlumnosMatri().add(al);
+			
+			return true;
+
+		} else {
+			return false;
+		}
+
 	}
 
 	@Override
 	public boolean calificar(Alumno al) {
-		// TODO Hacer cosas
+		if (consultarNivel(al) != -1) {
+			int nota = seguimiento.get(al);
+			if (nota < nivelMax) {
+				nota++;
+				seguimiento.put(al, nota);
+				return true;
+			}
+
+		}
 		return false;
 	}
-	
-	public int consultarNivel (Alumno al) {
+
+	public int consultarNivel(Alumno al) {
+
+		if (!getAlumnosMatri().contains(al)) {
+			return -1;
+		}
 		return seguimiento.get(al);
 	}
 
-	public boolean superarNivel (Alumno al) {
-		
-		// TODO comprobar si existe el alumno matriculado
-		
-		// subirle de nivel y que evolucione
-		
-		return false;
-	}
-	
-	public static List<Curso> parsearCursoOnline(List<Object> cursos) {
-		List<Object> requeridos = AccesoBD.accesoBD
-				.select("SELECT cursos_alumnos.idAlumnos,      cursos_alumnos.Nombre,      cursos_alumnos.DNI,      cursos_alumnos.Credito,      cursos_alumnos.Nivel,      cursos_alumnos.Apto,      cursos_alumnos.idCurso,      cursos_alumnos.Titulo,      cursos_alumnos.FechaInicio,      cursos_alumnos.FechaFin,      cursos_alumnos.NumeroDias,      cursos_alumnos.Precio,      cursos_alumnos.Tipo  FROM cursos_alumnos;");
-		List<Curso> curso = new ArrayList<>();
-		Curso c = null;
-		
-		for (int i = 0; i < cursos.size(); i++) {
-			Object[] registro = (Object[])cursos.get(i);
-			c = new CursoOnline((String)registro[1], (Calendar)registro[2], (Calendar)registro[3], (int)registro[4], (double)registro[5], (int)registro[6], curso);
-			c.setId((int)registro[1]);
-			curso.add(c);
-		}
-		return curso;
-		
-	}
 }
