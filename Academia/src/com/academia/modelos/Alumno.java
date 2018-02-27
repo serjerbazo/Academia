@@ -42,7 +42,7 @@ public class Alumno {
 		this.idAlumno = idAlumno;
 	}
 
-	public void anadir(Curso curso) {
+	public boolean anadir(Curso curso) {
 		PreparedStatement ps = AccesoBD.accesoBD.insert("Clase", 5);
 		ArrayList<Object> parametros = new ArrayList<>();
 		parametros.add(null);
@@ -50,7 +50,7 @@ public class Alumno {
 		parametros.add(curso.getId());
 		parametros.add(0);
 		parametros.add(false);
-		AccesoBD.accesoBD.rellenarPs(ps, parametros);
+		return AccesoBD.accesoBD.rellenarPs(ps, parametros);
 	}
 
 	public ArrayList<Curso> consultarCurso() {

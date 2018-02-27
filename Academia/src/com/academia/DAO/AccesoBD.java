@@ -97,21 +97,22 @@ public class AccesoBD {
 
 	}
 
-	public void rellenarPs(PreparedStatement ps, ArrayList<Object> parametros) {
+	public boolean rellenarPs(PreparedStatement ps, ArrayList<Object> parametros) {
 		for (int i = 0; i < parametros.size(); i++) {
 			try {
 				ps.setObject(i, parametros.get(i));
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			}
 			try {
 				ps.execute();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return false;
 			}
 		}
+		return true;
 
 	}
 
