@@ -20,7 +20,7 @@ public class CursoPresencial extends Curso {
 
 	@Override
 	public boolean matricular(Alumno al) {
-		if (al.getCrédito() >= super.getPrecio() && this.plazas > 0) {
+		if (al.getCrédito() >= this.getPrecio() && this.plazas > 0) {
 			if (super.consultarAlumnoApto(al)) {
 				return false;
 			} else {
@@ -40,6 +40,7 @@ public class CursoPresencial extends Curso {
 			}
 		}
 		if (contador >= this.asistMin) {
+			this.getAlumnosApto().add(al);
 			return true;
 		} else {
 			return false;
